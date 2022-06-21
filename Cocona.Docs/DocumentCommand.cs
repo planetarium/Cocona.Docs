@@ -6,7 +6,7 @@ namespace Cocona.Docs;
 public class DocumentCommand
 {
     [PrimaryCommand]
-    public void Generate([FromService] ICoconaCommandProvider commandProvider, [Argument] string outDir)
+    public void Generate([FromService] ICoconaCommandProvider commandProvider, [Argument(Name = "OUT_DIR", Description = "Path to output directory.")] string outDir)
     {
         var collection = commandProvider.GetCommandCollection();
         var rendered = GenerateDocs(collection);

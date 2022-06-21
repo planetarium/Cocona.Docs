@@ -15,7 +15,7 @@ $ dotnet build
 Just add **one line** to use this extension.
 
 ```csharp
-[HasSubCommand(typeof(Cocona.Docs.DocumentCommand), "docs")]
+[HasSubCommands(typeof(Cocona.Docs.DocumentCommand), "docs")]
 ```
 
 And you can run like the below command on your project:

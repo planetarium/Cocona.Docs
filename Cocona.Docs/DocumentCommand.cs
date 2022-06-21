@@ -29,7 +29,7 @@ public class DocumentCommand
                 continue;
             }
 
-            stringBuilder.Append($"<h2>{command.Name}</h2><br/>");
+            stringBuilder.Append($"<h2>{command.Name}</h2>");
             stringBuilder.Append($"<p>{command.Description}</p>");
 
             if (command.Options.Count > 0)

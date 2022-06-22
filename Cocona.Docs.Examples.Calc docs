@@ -1,0 +1,3 @@
+<style>dd {
+    margin-bottom: 2em;
+}</style><h2>Cocona.Docs.Examples.Calc docs</h2><p></p><h3>Arguments</h3><dl><dt><code>out_dir</code> String</dt><dd>Path to output directory.</dd></dl>

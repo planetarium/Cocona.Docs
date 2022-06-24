@@ -18,7 +18,7 @@ public class DocumentCommand
 }</style>";
     foreach (KeyValuePair<string, string> pair in rendered)
     {
-      File.WriteAllText(Path.Combine(outDir, pair.Key == "" ? "index" : pair.Key), css + pair.Value);
+      File.WriteAllText(Path.Combine(outDir, pair.Key == prefix ? "index.html" : pair.Key), css + pair.Value);
     }
   }
 

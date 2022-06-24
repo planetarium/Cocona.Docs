@@ -12,18 +12,19 @@ public class DocumentCommand
   {
     var collection = commandProvider.GetCommandCollection();
     var prefix = AppDomain.CurrentDomain.FriendlyName;
-    var rendered = GenerateDocs(collection, prefix: prefix, root: true);
+    const string extension = ".html";
+    var rendered = GenerateDocs(collection, prefix: prefix, root: true, extension);
     const string css = @"<style>dd {
     margin-bottom: 2em;
 }</style>";
     foreach (KeyValuePair<string, string> pair in rendered)
     {
-      File.WriteAllText(Path.Combine(outDir, pair.Key == prefix ? "index.html" : pair.Key), css + pair.Value);
+      File.WriteAllText(Path.Combine(outDir, (pair.Key == prefix ? "index" : pair.Key) + extension), css + pair.Value);
     }
   }
 
   private ImmutableDictionary<string, string> GenerateDocs(CommandCollection commandCollection, string prefix = "",
-    bool root = false)
+    bool root = false, string extension = "")
   {
     var subcommandsDictionary = ImmutableDictionary<string, string>.Empty;
     StringBuilder stringBuilder = new StringBuilder();
@@ -88,7 +89,7 @@ public class DocumentCommand
       stringBuilder.Append("<ul>");
       foreach (KeyValuePair<string, string> pair in subcommandsDictionary)
       {
-        stringBuilder.Append($"<li><a href=\"./{pair.Key}\">{pair.Key}</a></li>");
+        stringBuilder.Append($"<li><a href=\"./{pair.Key + extension}\">{pair.Key}</a></li>");
       }
 
       stringBuilder.Append("</ul>");

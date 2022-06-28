@@ -37,7 +37,7 @@ public class DocumentCommand
         continue;
       }
 
-      stringBuilder.Append($"<h2>{prefix + (root || commandCollection.All.Count == 1 ? "" : " " + command.Name)}</h2>");
+      stringBuilder.Append($"<h2>{prefix + (command.IsPrimaryCommand ? "" : " " + command.Name)}</h2>");
       stringBuilder.Append($"<p>{command.Description}</p>");
 
       if (command.Options.Count > 0)

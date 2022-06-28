@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using Cocona.Command;
+using Cocona.Command.BuiltIn;
 
 namespace Cocona.Docs;
 
@@ -30,6 +31,11 @@ public class DocumentCommand
     StringBuilder stringBuilder = new StringBuilder();
     foreach (var command in commandCollection.All)
     {
+      if (command.CommandType == typeof(BuiltInPrimaryCommand))
+      {
+        continue;
+      }
+
       if (!command.IsPrimaryCommand && command.SubCommands is CommandCollection { })
       {
         subcommandsDictionary = subcommandsDictionary

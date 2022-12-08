@@ -1,4 +1,4 @@
-# Cocona.Docs
+# ![](./docs/assets/logo.svg)
 
 A [`Cocona`][Cocona] extension to generate CLI [`Cocona`][Cocona] App's documents easily.
 

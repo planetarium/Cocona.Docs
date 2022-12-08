@@ -39,7 +39,7 @@ public class DocumentCommand
       if (!command.IsPrimaryCommand && command.SubCommands is CommandCollection { })
       {
         subcommandsDictionary = subcommandsDictionary
-          .AddRange(GenerateDocs(command.SubCommands, prefix + " " + command.Name));
+          .AddRange(GenerateDocs(command.SubCommands, prefix + " " + command.Name, false, extension));
         continue;
       }
 

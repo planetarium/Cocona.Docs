@@ -25,7 +25,7 @@ public class DocumentCommand
   }
 
   private ImmutableDictionary<string, string> GenerateDocs(CommandCollection commandCollection, string prefix = "",
-    bool root = false, string extension = "")
+    bool root = false, string extension = "", int depth = 1)
   {
     var subcommandsDictionary = ImmutableDictionary<string, string>.Empty;
     StringBuilder stringBuilder = new StringBuilder();
@@ -39,7 +39,7 @@ public class DocumentCommand
       if (!command.IsPrimaryCommand && command.SubCommands is CommandCollection { })
       {
         subcommandsDictionary = subcommandsDictionary
-          .AddRange(GenerateDocs(command.SubCommands, prefix + " " + command.Name, false, extension));
+          .AddRange(GenerateDocs(command.SubCommands, prefix + " " + command.Name, false, extension, depth + 1));
         continue;
       }
 
@@ -93,7 +93,7 @@ public class DocumentCommand
     {
       stringBuilder.Append("<h2>Subcommands</h2>");
       stringBuilder.Append("<ul>");
-      foreach (KeyValuePair<string, string> pair in subcommandsDictionary)
+      foreach (KeyValuePair<string, string> pair in subcommandsDictionary.Where(pair => pair.Key.Count(c => c == ' ') == depth))
       {
         stringBuilder.Append($"<li><a href=\"./{pair.Key + extension}\">{pair.Key}</a></li>");
       }

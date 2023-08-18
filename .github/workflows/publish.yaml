@@ -1,0 +1,38 @@
+name: Build artifact and push
+
+on:
+  push:
+    branches:
+      - "main"
+      - "cd-nuget"
+    tags:
+      - "*"
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+      - id: determine-version
+        run: node scripts/determine-version.js
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore -c Release -p:Version=$PACKAGE_VERSION
+        env:
+          PACKAGE_VERSION: ${{ steps.determine-version.outputs.package-version }}
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+      - name: Pack
+        run: dotnet pack --no-restore -c Release -p:Version=$PACKAGE_VERSION
+        env:
+          PACKAGE_VERSION: ${{ steps.determine-version.outputs.package-version }}
+      - name: Publish
+        run: dotnet nuget push "./Cocona.Docs/bin/Release/Cocona.Docs.$PACKAGE_VERSION.nupkg"
+        env:
+          PACKAGE_VERSION: ${{ steps.determine-version.outputs.package-version }}

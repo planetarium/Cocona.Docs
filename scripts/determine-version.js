@@ -62,7 +62,7 @@ const getTs = async () => {
 }
 
 const getPackageVersion = async () => {
-  const csprojPath = path.join(path.dirname(__dirname), 'Cocona.Docs/CoconaDocs.csproj');
+  const csprojPath = path.join(path.dirname(__dirname), 'Cocona.Docs', 'Cocona.Docs.csproj');
   const tag = await getTag();
   const versionPrefix = await readVersionPrefix(csprojPath);
 

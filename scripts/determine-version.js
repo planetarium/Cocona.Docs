@@ -35,7 +35,8 @@ const getTag = async () => {
 
 const getTimestamp = async () => {
   if (process.env.GITHUB_EVENT_PATH) {
-    return new Date(process.env.GITHUB_EVENT_PATH);
+    const event = JSON.parse(await fs.readFile(process.env.GITHUB_EVENT_PATH))
+    return new Date(event);
   }
   
   const { stdout } = await execFile('git', [
@@ -78,6 +79,7 @@ const getPackageVersion = async () => {
 
 const main = async () => {
   const packageVersion = await getPackageVersion();
+  console.log(packageVersion);
 
   if (!process.env.GITHUB_OUTPUT) return;
 

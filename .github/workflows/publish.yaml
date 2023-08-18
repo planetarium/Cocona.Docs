@@ -38,6 +38,11 @@ jobs:
         env:
           PACKAGE_VERSION: ${{ steps.determine-version.outputs.package-version }}
       - name: Publish
-        run: dotnet nuget push "./Cocona.Docs/bin/Release/Cocona.Docs.$PACKAGE_VERSION.nupkg"
+        run: |
+          dotnet nuget push \
+            "./Cocona.Docs/bin/Release/Cocona.Docs.$PACKAGE_VERSION.nupkg" \
+            --skip-duplicate \
+            --api-key "$NUGET_API_KEY"
+            --source https://api.nuget.org/v3/index.json
         env:
           PACKAGE_VERSION: ${{ steps.determine-version.outputs.package-version }}

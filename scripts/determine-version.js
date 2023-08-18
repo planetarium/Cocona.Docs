@@ -78,8 +78,6 @@ const getPackageVersion = async () => {
 
 const main = async () => {
   const packageVersion = await getPackageVersion();
-  
-  console.error('packageVersion', packageVersion);
 
   if (!process.env.GITHUB_OUTPUT) return;
 
@@ -88,3 +86,5 @@ const main = async () => {
     `package-version=${packageVersion}\n`,
   );
 };
+
+main();

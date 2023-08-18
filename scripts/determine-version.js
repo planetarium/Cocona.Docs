@@ -35,7 +35,8 @@ const getTag = async () => {
 
 const getTimestamp = async () => {
   if (process.env.GITHUB_EVENT_PATH) {
-    const event = JSON.parse(await fs.readFile(process.env.GITHUB_EVENT_PATH))
+    const event = JSON.parse(await fs.readFile(process.env.GITHUB_EVENT_PATH));
+    console.log(event);
     return new Date(event);
   }
   

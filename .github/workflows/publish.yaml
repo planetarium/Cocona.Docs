@@ -23,11 +23,7 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
-        run: |
-          echo PACKAGE_VERSION=$PACKAGE_VERSION
-          echo TEST_VALUE=$TEST_VALUE
-          echo GITHUB_OUTPUT=$GITHUB_OUTPUT
-          dotnet build --no-restore -c Release -p:Version=$PACKAGE_VERSION
+        run: dotnet build --no-restore -c Release -p:Version=$PACKAGE_VERSION
         env:
           PACKAGE_VERSION: ${{ steps.determine-version.outputs.package-version }}
           TEST_VALUE: value

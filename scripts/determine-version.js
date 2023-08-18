@@ -78,6 +78,8 @@ const getPackageVersion = async () => {
 
 const main = async () => {
   const packageVersion = await getPackageVersion();
+  
+  console.log('packageVersion', packageVersion);
 
   if (!process.env.GITHUB_OUTPUT) return;
 

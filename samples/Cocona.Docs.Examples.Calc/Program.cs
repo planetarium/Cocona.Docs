@@ -1,5 +1,6 @@
 ﻿using Cocona;
 
+[HasSubCommands(typeof(CalculateCommand), "calculate")]
 [HasSubCommands(typeof(Cocona.Docs.DocumentCommand), "docs")]
 public class Program
 {

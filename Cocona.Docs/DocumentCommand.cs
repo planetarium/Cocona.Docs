@@ -1,7 +1,4 @@
-using System.Collections.Immutable;
-using System.Text;
 using Cocona.Command;
-using Cocona.Command.BuiltIn;
 
 namespace Cocona.Docs;
 
@@ -70,11 +67,11 @@ public class DocumentCommand
               .CommandHeader(name, command.Description)
               .Arguments(command.Arguments.Select(argument => (
                 argument.Name,
-                argument.ArgumentType.Name,
+                StringifyType(argument.ArgumentType),
                 argument.Description)).ToList())
               .Options(command.Options.Select(option => (
                 option.Name,
-                option.OptionType.Name,
+                StringifyType(option.OptionType),
                 option.DefaultValue.Value?.ToString() ?? "",
                 option.Description)).ToList()));
           }
@@ -87,4 +84,11 @@ public class DocumentCommand
           (subcommand.name.Replace(' ', '_'), subcommand.name))))
       .Build();
   }
+
+  private static string StringifyType(Type type) => type switch
+  {
+    _ when type.IsEnum => $"enum {type.Name} ({string.Join(", ", Enum.GetNames(type))})",
+    _ when Nullable.GetUnderlyingType(type) is { } underlyingType => $"{underlyingType.Name}?",
+    _ => type.Name,
+  };
 }

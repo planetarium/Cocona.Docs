@@ -1,32 +1,150 @@
 
       <script src="https://cdn.tailwindcss.com"></script>
-      <style>@font-face { font-family: 'fira-code'; src: url('woff2/FiraCode-Light.woff2') format('woff2'), url("woff/FiraCode-Light.woff") }</style>
-      <body class="container bg-slate-950 mx-auto text-slate-100 font-mono py-20">
-    <h1 class="text-3xl font-bold pb-4 border-b-2 border-slate-700">Cocona.Docs.Examples.Calc CLI</h1><h1 class="text-xl font-bold mt-16 mb-8">add</h1><h2 class="px-4 w-fit bg-green-500 mb-4">Arguments</h2>
-        <div class="flex items-center mb-2">
-          <span class="font-['fira-code'] mr-2">&#10148;</span>
-          <span class="font-bold px-2 bg-slate-200 text-slate-800">x</span>
-          <span class="ml-4 text-slate-400 text-sm">Int32</span>
-        </div>
-        <div class="flex items-center mb-4 ml-4">
-          <span class="ml-2">The first operand.</span>
-        </div>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>
+      <style>@font-face { font-family: "fira-code"; src: url("woff2/FiraCode-Light.woff2") format("woff2"), url("woff/FiraCode-Light.woff"); }</style>
+
+      <body class="bg-slate-950 font-mono">
+    
+      <header class="sticky top-0 text-white px-8 h-16 z-41 bg-slate-950 border-b border-slate-700 flex gap-4 items-center">
+        <span class="text-white text-4xl top-5 left-4 cursor-pointer md:hidden" onclick="toggle()">
+          <i class="bi bi-list"></i>
+        </span>
+        <h1 class="text-2xl font-bold">Cocona.Docs.Examples.Calc CLI</h1>
+      </header>
+    
+      <div class="container mx-auto px-4 py-16 text-white transition-[padding] md:pl-[19rem]">
+        <ul class="flex flex-col gap-16">
+    <li id="add" class="flex flex-col gap-6 scroll-mt-24">
+      <div class="flex flex-col gap-2">
+        <h1 class="text-xl font-bold">add</h1>
+    </div>
+      <h2 class="px-4 w-fit bg-blue-500">Arguments</h2>
+      <ul class="flex flex-col gap-4">
+    
+        <li class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <span class="font-['fira-code']">&#10148;</span>
+            <span class="px-2 bg-slate-200 font-bold text-slate-800">x</span>
+            <span class="text-slate-400 text-sm">Int32</span>
+          </div>
+          <div class="ml-6">The first operand.</div>
+        </li>
       
-        <div class="flex items-center mb-2">
-          <span class="font-['fira-code'] mr-2">&#10148;</span>
-          <span class="font-bold px-2 bg-slate-200 text-slate-800">y</span>
-          <span class="ml-4 text-slate-400 text-sm">Int32</span>
-        </div>
-        <div class="flex items-center mb-4 ml-4">
-          <span class="ml-2">The second operand.</span>
-        </div>
-      <div class="mb-8"></div><div class="border-b-2 border-slate-700 mt-16"></div><h1 class="text-xl font-bold mt-16 mb-8">docs</h1><h2 class="px-4 w-fit bg-green-500 mb-4">Arguments</h2>
-        <div class="flex items-center mb-2">
-          <span class="font-['fira-code'] mr-2">&#10148;</span>
-          <span class="font-bold px-2 bg-slate-200 text-slate-800">out_dir</span>
-          <span class="ml-4 text-slate-400 text-sm">String</span>
-        </div>
-        <div class="flex items-center mb-4 ml-4">
-          <span class="ml-2">Path to output directory.</span>
-        </div>
-      <div class="mb-8"></div><div class="border-b-2 border-slate-700 mt-16"></div></body>
+        <li class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <span class="font-['fira-code']">&#10148;</span>
+            <span class="px-2 bg-slate-200 font-bold text-slate-800">y</span>
+            <span class="text-slate-400 text-sm">Int32</span>
+          </div>
+          <div class="ml-6">The second operand.</div>
+        </li>
+      </ul>
+</li>
+<li class="border-b border-slate-700"></li>
+<li id="calculate_add" class="flex flex-col gap-6 scroll-mt-24">
+      <div class="flex flex-col gap-2">
+        <h1 class="text-xl font-bold">calculate add</h1>
+    <p class="text-slate-400">Add two numbers.</p></div>
+      <h2 class="px-4 w-fit bg-blue-500">Arguments</h2>
+      <ul class="flex flex-col gap-4">
+    
+        <li class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <span class="font-['fira-code']">&#10148;</span>
+            <span class="px-2 bg-slate-200 font-bold text-slate-800">x</span>
+            <span class="text-slate-400 text-sm">Int32</span>
+          </div>
+          <div class="ml-6">The first operand.</div>
+        </li>
+      
+        <li class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <span class="font-['fira-code']">&#10148;</span>
+            <span class="px-2 bg-slate-200 font-bold text-slate-800">y</span>
+            <span class="text-slate-400 text-sm">Int32</span>
+          </div>
+          <div class="ml-6">The second operand.</div>
+        </li>
+      </ul>
+</li>
+<li id="calculate_subtract" class="flex flex-col gap-6 scroll-mt-24">
+      <div class="flex flex-col gap-2">
+        <h1 class="text-xl font-bold">calculate subtract</h1>
+    <p class="text-slate-400">Subtract two numbers.</p></div>
+      <h2 class="px-4 w-fit bg-blue-500">Arguments</h2>
+      <ul class="flex flex-col gap-4">
+    
+        <li class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <span class="font-['fira-code']">&#10148;</span>
+            <span class="px-2 bg-slate-200 font-bold text-slate-800">x</span>
+            <span class="text-slate-400 text-sm">Int32</span>
+          </div>
+          <div class="ml-6">The first operand.</div>
+        </li>
+      
+        <li class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <span class="font-['fira-code']">&#10148;</span>
+            <span class="px-2 bg-slate-200 font-bold text-slate-800">y</span>
+            <span class="text-slate-400 text-sm">Int32</span>
+          </div>
+          <div class="ml-6">The second operand.</div>
+        </li>
+      </ul>
+
+      <h2 class="px-4 w-fit bg-slate-500">Options</h2>
+      <ul class="flex flex-col gap-4">
+    
+        <li class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <span class="font-['fira-code']">&#10148;</span>
+            <span class="px-2 bg-slate-200 font-bold text-slate-800">reverse</span>
+            <span class="text-slate-400 text-sm">&lt;Boolean&gt;</span>
+          </div>
+          <div class="ml-6 text-sm text-slate-400">Default Value : False</div>
+          <div class="ml-6">Reverse operands' order.</div>
+      </li>
+</ul>
+</li>
+<li class="border-b border-slate-700"></li>
+<li id="docs" class="flex flex-col gap-6 scroll-mt-24">
+      <div class="flex flex-col gap-2">
+        <h1 class="text-xl font-bold">docs</h1>
+    </div>
+      <h2 class="px-4 w-fit bg-blue-500">Arguments</h2>
+      <ul class="flex flex-col gap-4">
+    
+        <li class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <span class="font-['fira-code']">&#10148;</span>
+            <span class="px-2 bg-slate-200 font-bold text-slate-800">out_dir</span>
+            <span class="text-slate-400 text-sm">String</span>
+          </div>
+          <div class="ml-6">Path to output directory.</div>
+        </li>
+      </ul>
+</li>
+<li class="border-b border-slate-700"></li>
+
+        </ul>
+      </div>
+    
+      <aside class="sidebar fixed top-16 left-0 z-40 h-[calc(100vh-4rem)] w-72 bg-slate-950 border-r border-slate-700 overflow-y-auto translate-x-[-100%] transition md:translate-x-0">
+        <ul class="flex flex-col gap-4 p-8 text-white text-sm">
+    <li><a href="#add" class="block" onclick="toggle()">add</a></li>
+<li class="border-b border-slate-700"></li><li><a href="#calculate_add" class="block" onclick="toggle()">calculate add</a></li>
+<li><a href="#calculate_subtract" class="block" onclick="toggle()">calculate subtract</a></li>
+<li class="border-b border-slate-700"></li><li><a href="#docs" class="block" onclick="toggle()">docs</a></li>
+<li class="border-b border-slate-700"></li>
+        </ul>
+      </aside>
+     
+      </body>
+
+      <script type="text/javascript">
+        function toggle() {
+          document.querySelector(".sidebar").classList.toggle("translate-x-[-100%]");
+        }
+      </script>
+    

@@ -10,7 +10,7 @@ public class DocumentCommand
   [PrimaryCommand]
   public void Generate([FromService] ICoconaCommandProvider commandProvider,
     [Argument(Name = "OUT_DIR", Description = "Path to output directory.")]
-string outDir)
+    string outDir)
   {
     var collection = commandProvider.GetCommandCollection();
     var appName = AppDomain.CurrentDomain.FriendlyName;
@@ -21,54 +21,70 @@ string outDir)
 
   private static string GenerateDocs(CommandCollection commandCollection, string title = "")
   {
-    var builder = new DocsBuilder()
-      .Header($"{title} CLI");
-
-    void AppendCommand(CommandDescriptor command, string parent = "")
+    List<(string name, CommandDescriptor command)> GetSubcommands(
+      CommandDescriptor command,
+      string parentName = "")
     {
-      var commandName = command.Name switch
-      {
-        _ when command.IsPrimaryCommand => parent,
-        _ when parent.Length == 0 => command.Name,
-        _ => $"{parent} {command.Name}"
-      };
       var subcommands = command.SubCommands?.All ?? Array.Empty<CommandDescriptor>();
       var isEmpty = command.Description.Length == 0 &&
                     command.Arguments.Count == 0 &&
                     command.Options.Count == 0;
-
-      if (!isEmpty)
+      if (isEmpty && subcommands.Count == 0)
       {
-        builder
-          .Command(commandName)
-          .Description(command.Description)
-          .Arguments(command.Arguments.Select(argument => (
-            argument.Name,
-            argument.ArgumentType.Name,
-            argument.Description)).ToList())
-          .Options(command.Options.Select(option => (
-            option.Name,
-            option.Description,
-            option.OptionType.Name,
-            option.DefaultValue.HasValue ? option.DefaultValue.ToString() : "")).ToList());
+        return new List<(string name, CommandDescriptor command)>();
       }
 
-      foreach (var subcommand in subcommands.OrderBy(subcommand => !subcommand.IsPrimaryCommand))
+      var commandName = command.Name switch
       {
-        AppendCommand(subcommand, commandName);
+        _ when command.IsPrimaryCommand => parentName,
+        _ when parentName.Length == 0 => command.Name,
+        _ => $"{parentName} {command.Name}",
+      };
+
+      var unfoldedSubcommands = subcommands
+        .OrderBy(subcommand => !subcommand.IsPrimaryCommand)
+        .SelectMany(subcommand => GetSubcommands(subcommand, commandName))
+        .ToList();
+      if (isEmpty)
+      {
+        return unfoldedSubcommands;
       }
 
-      if (parent.Length == 0 && (subcommands.Count > 0 || !isEmpty))
-      {
-        builder.Divider();
-      }
+      return new[] { (commandName, command) }.Concat(unfoldedSubcommands).ToList();
     }
 
-    foreach (var command in commandCollection.All)
-    {
-      AppendCommand(command);
-    }
+    var commands = commandCollection.All
+      .Select(command => GetSubcommands(command))
+      .Where(subcommands => subcommands.Count > 0)
+      .ToList();
 
-    return builder.Build();
+    var docs = new DocsBuilder();
+    return docs.Header(title)
+      .Body(() =>
+      {
+        foreach (var subcommands in commands)
+        {
+          foreach (var (name, command) in subcommands)
+          {
+            docs.Command(name.Replace(' ', '_'), () => docs
+              .CommandHeader(name, command.Description)
+              .Arguments(command.Arguments.Select(argument => (
+                argument.Name,
+                argument.ArgumentType.Name,
+                argument.Description)).ToList())
+              .Options(command.Options.Select(option => (
+                option.Name,
+                option.OptionType.Name,
+                option.DefaultValue.Value?.ToString() ?? "",
+                option.Description)).ToList()));
+          }
+
+          docs.Divider();
+        }
+      })
+      .SideBar(commands.Select(subcommands =>
+        subcommands.Select(subcommand =>
+          (subcommand.name.Replace(' ', '_'), subcommand.name))))
+      .Build();
   }
 }
